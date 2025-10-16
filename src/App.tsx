@@ -3,6 +3,8 @@
 // import viteLogo from '/vite.svg';
 // import './App.css';
 
+import { useState } from 'react';
+
 // const tracks = null;
 const tracks = [
   {
@@ -32,9 +34,12 @@ const tracks = [
   },
 ];
 
-const selectedTrackId = null;
-
 export function App() {
+  const [selectedTrackId, setSelectedTrackId] = useState(null);
+
+  // let selectedTrackId = stateManagment[0];
+  // let setSelectedTrackId = stateManagment[1];
+
   if (tracks === null) {
     return (
       <div>
@@ -54,7 +59,14 @@ export function App() {
   }
   return (
     <div>
-      <h1>Musicfun Player</h1>
+      <h1>Musicfy Player</h1>
+      <button
+        onClick={() => {
+          setSelectedTrackId(null);
+        }}
+      >
+        Сбросить выделение
+      </button>
       <ul>
         {tracks.map(track => {
           return (
@@ -64,7 +76,13 @@ export function App() {
                 border: track.id === selectedTrackId ? '1px solid orange' : '',
               }}
             >
-              <div>{track.title}</div>
+              <div
+                onClick={() => {
+                  setSelectedTrackId(track.id);
+                }}
+              >
+                {track.title}
+              </div>
               <audio src={track.url} controls></audio>
             </li>
           );
