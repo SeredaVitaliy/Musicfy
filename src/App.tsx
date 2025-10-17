@@ -3,39 +3,36 @@
 // import viteLogo from '/vite.svg';
 // import './App.css';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // const tracks = null;
-const tracks = [
-  {
-    id: 1,
-    title: 'Musicfy Player',
-    url: "music/Snow Strippers - Don't You Feel.mp3",
-  },
-  {
-    id: 2,
-    title: 'Musicfy soundtrack',
-    url: 'music/Snow Strippers - Every Night.mp3',
-  },
-  {
-    id: 3,
-    title: 'Musicfy soundtrack',
-    url: 'music/Snow Strippers - Every Night.mp3',
-  },
-  {
-    id: 4,
-    title: 'Musicfy soundtrack',
-    url: 'music/Snow Strippers - Every Night.mp3',
-  },
-  {
-    id: 5,
-    title: 'Musicfy soundtrack',
-    url: 'music/Snow Strippers - Every Night.mp3',
-  },
-];
+// const tracks = [
+//   {
+//     id: 1,
+//     title: 'Musicfy Player',
+//     url: 'https://musicfun.it-incubator.app/api/samurai-way-soundtrack.mp3',
+//   },
+//   {
+//     id: 2,
+//     title: 'Musicfy soundtrack',
+//     url: 'https://musicfun.it-incubator.app/api/samurai-way-soundtrack-instrumental.mp3',
+//   },
+// ];
 
 export function App() {
   const [selectedTrackId, setSelectedTrackId] = useState(null);
+  const [tracks, setTracks] = useState(null);
+
+  useEffect(() => {
+    console.log('effect');
+    fetch('https://musicfun.it-incubator.app/api/1.0/playlists/tracks', {
+      headers: {
+        'api-key': '286a40d4-b830-47f5-b584-7c2fe4502a83',
+      },
+    })
+      .then(res => res.json())
+      .then(json => setTracks(json.data));
+  }, []);
 
   // let selectedTrackId = stateManagment[0];
   // let setSelectedTrackId = stateManagment[1];
@@ -81,9 +78,9 @@ export function App() {
                   setSelectedTrackId(track.id);
                 }}
               >
-                {track.title}
+                {track.attributes.title}
               </div>
-              <audio src={track.url} controls></audio>
+              <audio src={track.attributes.attachments[0].url} controls></audio>
             </li>
           );
         })}
