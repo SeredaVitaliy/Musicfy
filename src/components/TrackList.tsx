@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import { TrackItem } from './TrackItem';
 
-export function TrackList() {
-  const [selectedTrackId, setSelectedTrackId] = useState(null);
+export function TrackList({ selectedTrackId, onTrackSelect }) {
   const [tracks, setTracks] = useState(null);
 
   useEffect(() => {
@@ -31,29 +31,30 @@ export function TrackList() {
     );
   }
 
-  return (
-    <ul>
-      {tracks.map(track => {
-        return (
-          <li
-            key={track.id}
-            style={{
-              border: track.id === selectedTrackId ? '1px solid orange' : '',
-            }}
-          >
-            <div
-              onClick={() => {
-                setSelectedTrackId(track.id);
+  const handleResetClick = () => {
+    onTrackSelect?.(null);
+  };
 
-                // setSelectedTrack(track);
-              }}
-            >
-              {track.attributes.title}
-            </div>
-            <audio src={track.attributes.attachments[0].url} controls></audio>
-          </li>
-        );
-      })}
-    </ul>
+  const handleClick = trackId => {
+    onTrackSelect?.(trackId);
+  };
+
+  return (
+    <div>
+      <button onClick={handleResetClick}>reset</button>
+      <hr />
+      <ul>
+        {tracks.map(track => {
+          return (
+            <TrackItem
+              key={track.id}
+              track={track}
+              isSelected={track.id === selectedTrackId}
+              onSelect={handleClick}
+            />
+          );
+        })}
+      </ul>
+    </div>
   );
 }

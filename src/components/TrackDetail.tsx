@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
 
-export function TrackDetail() {
+export function TrackDetail({ trackId }) {
   const [selectedTrack, setSelectedTrack] = useState(null);
-  const selectedTrackId = null;
 
   useEffect(() => {
-    if (!selectedTrackId) {
+    if (!trackId) {
+      setSelectedTrack(null);
       return;
     }
     fetch(
-      'https://musicfun.it-incubator.app/api/1.0/playlists/tracks/' +
-        selectedTrackId,
+      'https://musicfun.it-incubator.app/api/1.0/playlists/tracks/' + trackId,
       {
         headers: {
           'api-key': '286a40d4-b830-47f5-b584-7c2fe4502a83',
@@ -19,17 +18,14 @@ export function TrackDetail() {
     )
       .then(res => res.json())
       .then(json => setSelectedTrack(json.data));
-  }, [selectedTrackId]);
+  }, [trackId]);
 
   return (
     <div>
       <h2>Details</h2>
-      {!selectedTrack && !selectedTrackId && 'Track is not selected'}
-      {!selectedTrack && selectedTrackId && 'Loading...'}
-      {selectedTrack &&
-        selectedTrackId &&
-        selectedTrack.id !== selectedTrackId &&
-        'Loading...'}
+      {!selectedTrack && !trackId && 'Track is not selected'}
+      {!selectedTrack && trackId && 'Loading...'}
+      {selectedTrack && trackId && selectedTrack.id !== trackId && 'Loading...'}
       {selectedTrack && (
         <div>
           <h3>{selectedTrack.attributes.title}</h3>
