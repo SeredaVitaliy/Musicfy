@@ -1,7 +1,20 @@
 import { useEffect, useState } from 'react';
 
-export function TrackDetail({ trackId }) {
-  const [selectedTrack, setSelectedTrack] = useState(null);
+type GetTrackDetailsOutputData = {
+  id: string;
+  attributes: {
+    title: string;
+    lyrics: string | null;
+  };
+};
+
+type Props = {
+  trackId: string | null;
+};
+
+export function TrackDetail({ trackId }: Props) {
+  const [selectedTrack, setSelectedTrack] =
+    useState<GetTrackDetailsOutputData | null>(null);
 
   useEffect(() => {
     if (!trackId) {

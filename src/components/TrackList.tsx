@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
-import { TrackItem } from './TrackItem';
+import { TrackItem, type TrackListItemOutput } from './TrackItem';
 
-export function TrackList({ selectedTrackId, onTrackSelect }) {
-  const [tracks, setTracks] = useState(null);
+type Props = {
+  selectedTrackId: string | null;
+  onTrackSelect: (id: string | null) => void;
+};
+
+export function TrackList({ selectedTrackId, onTrackSelect }: Props) {
+  const [tracks, setTracks] = useState<Array<TrackListItemOutput> | null>(null);
 
   useEffect(() => {
     console.log('effect');
@@ -35,7 +40,7 @@ export function TrackList({ selectedTrackId, onTrackSelect }) {
     onTrackSelect?.(null);
   };
 
-  const handleClick = trackId => {
+  const handleClick = (trackId: string) => {
     onTrackSelect?.(trackId);
   };
 
