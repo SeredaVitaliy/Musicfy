@@ -1,4 +1,4 @@
-import { useTracksDetail } from './useTracksDetail';
+import { useTracksDetail } from '../bll/useTracksDetail';
 
 type Props = {
   trackId: string | null;
