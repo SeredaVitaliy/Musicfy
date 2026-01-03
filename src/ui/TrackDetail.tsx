@@ -1,4 +1,5 @@
 import { useTracksDetail } from '../bll/useTracksDetail';
+import styles from './TrackDetail.module.css';
 
 type Props = {
   trackId: string | null;
@@ -8,7 +9,7 @@ export function TrackDetail({ trackId }: Props) {
   const { trackDetails } = useTracksDetail(trackId);
 
   return (
-    <div>
+    <div className={styles.track}>
       <h2>Details</h2>
       {!trackDetails && !trackId && 'Track is not selected'}
       {!trackDetails && trackId && 'Loading...'}

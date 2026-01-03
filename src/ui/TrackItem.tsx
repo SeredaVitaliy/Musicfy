@@ -1,4 +1,6 @@
+import clsx from 'clsx';
 import type { TrackListItemOutput } from '../dal/api';
+import styles from './TrackList.module.css';
 
 type Props = {
   onSelect: (trackId: string) => void;
@@ -9,13 +11,15 @@ type Props = {
 export function TrackItem({ onSelect, track, isSelected }: Props) {
   const handleClick = () => onSelect?.(track.id);
 
+  const obj = {
+    [styles.track]: true,
+    [styles.selected]: isSelected,
+  };
+
+  const className = clsx(obj);
+
   return (
-    <li
-      key={track.id}
-      style={{
-        border: isSelected ? '1px solid orange' : '',
-      }}
-    >
+    <li className={className} key={track.id}>
       <div onClick={handleClick}>{track.attributes.title}</div>
       <audio src={track.attributes.attachments[0].url} controls></audio>
     </li>

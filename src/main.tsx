@@ -1,7 +1,8 @@
 // import { StrictMode } from "react";
 import { createRoot } from 'react-dom/client';
 import './index.css';
-// import { App } from './App.tsx';
+// import './ui/tracks.css';
+// import './ui/track-detail.css';
 import { MainPage } from './ui/MainPage.tsx';
 
 const rootEl = document.getElementById('root');
